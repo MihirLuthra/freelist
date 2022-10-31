@@ -1,0 +1,15 @@
+[package]
+name = "freelist"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.57.0"
+
+[dependencies]
+bit_fiddler = "2.1.1"
+seq-macro = "0.3.1"
+libc = { version = "0.2.137", optional = true }
+once_cell = { version = "1.16.0", optional = true }
+
+[features]
+default = ["calloc"]
+calloc = ["libc", "once_cell"]

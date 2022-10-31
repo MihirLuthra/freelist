@@ -1,0 +1,5 @@
+max_width = 128
+wrap_comments = false
+group_imports = "StdExternalCrate"
+imports_granularity = "Module"
+format_macro_bodies = false
