@@ -33,7 +33,10 @@ pub fn calloc(nmemb: size_t, size: size_t, underlying_calloc: impl FnOnce(size_t
     let mut recyclable = true;
 
     let res = match FREELIST.recycle(next_power_of_2) {
-        Ok(ptr) => Ok(ptr),
+        Ok(ptr) => {
+            unsafe { ptr.write_bytes(0, nmemb * size) }; // calloc returns memory set to 0
+            Ok(ptr)
+        },
         Err(Error::BucketFull) => unreachable!(),
         Err(Error::BucketEmpty) => Err(()),
         Err(Error::SizeNotPowerOf2 /* in case next_power_of_2() returns 0 */ | Error::BucketNotAvailable) => {
